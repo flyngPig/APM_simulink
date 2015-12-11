@@ -1,0 +1,15 @@
+[submodule "modules/PX4Firmware"]
+	path = modules/PX4Firmware
+	url = git://github.com/diydrones/PX4Firmware.git
+[submodule "modules/PX4NuttX"]
+	path = modules/PX4NuttX
+	url = git://github.com/diydrones/PX4NuttX.git
+[submodule "modules/uavcan"]
+	path = modules/uavcan
+	url = git://github.com/diydrones/uavcan.git
+[submodule "modules/waf"]
+	path = modules/waf
+	url = git://github.com/diydrones/waf.git
+[submodule "modules/gbenchmark"]
+	path = modules/gbenchmark
+	url = git://github.com/google/benchmark.git
