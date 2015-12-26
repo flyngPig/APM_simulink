@@ -39,6 +39,10 @@ bool Copter::set_mode(uint8_t mode)
             #endif
             break;
 
+        case TEST:
+            success = test_init(ignore_checks);
+			break;
+
         case ALT_HOLD:
             success = althold_init(ignore_checks);
             break;
@@ -150,6 +154,10 @@ void Copter::update_flight_mode()
                 stabilize_run();
             #endif
             break;
+
+        case:
+        	success = test_run();
+        	break;
 
         case ALT_HOLD:
             althold_run();
@@ -328,6 +336,9 @@ void Copter::print_flight_mode(AP_HAL::BetterStream *port, uint8_t mode)
     case STABILIZE:
         port->print("STABILIZE");
         break;
+    case TEST:
+            port->print("TEST");
+            break;
     case ACRO:
         port->print("ACRO");
         break;

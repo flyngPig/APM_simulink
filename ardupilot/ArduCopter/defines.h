@@ -101,7 +101,8 @@ enum autopilot_modes {
     FLIP =         14,  // automatically flip the vehicle on the roll axis
     AUTOTUNE =     15,  // automatically tune the vehicle's roll and pitch gains
     POSHOLD =      16,  // automatic position hold with manual override, with automatic throttle
-    BRAKE =        17   // full-brake using inertial/GPS system, no pilot input
+    BRAKE =        17,   // full-brake using inertial/GPS system, no pilot input
+	TEST =		   18 	//Amit 26/12/15
 };
 
 // Tuning enumeration
