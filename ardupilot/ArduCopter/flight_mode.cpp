@@ -334,7 +334,7 @@ void Copter::print_flight_mode(AP_HAL::BetterStream *port, uint8_t mode)
 {
     switch (mode) {
     case STABILIZE:
-        port->print("STABILIZE1111");
+        port->print("STABILIZE");
         break;
     case TEST:
             port->print("TEST");
