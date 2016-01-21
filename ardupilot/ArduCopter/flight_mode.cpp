@@ -155,8 +155,8 @@ void Copter::update_flight_mode()
             #endif
             break;
 
-        case:
-        	success = test_run();
+        case TEST:
+        	test_run();
         	break;
 
         case ALT_HOLD:
