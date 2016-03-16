@@ -11,6 +11,8 @@
 3. only if building is failing
   - `sudo apt-get install gawk`
 
+4. some times after updating the g++ version the makefile search for the file: `arm-linux-gnueabihf-g++` but the file is called diferently, for example `arm-linux-gnueabihf-g++-4.8` we need to make soft link for this file so it can be found
+
 ### clone
 `git clone https://github.com/flyngPig/APM_simulink.git`
 
