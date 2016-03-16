@@ -14,7 +14,12 @@
   - sudo apt-get install gawk
 
 ### clone
-git clone https://github.com/flyngPig/APM_simulink.git
+`git clone https://github.com/flyngPig/APM_simulink.git`
+
+if you have certification problems it culd be because the time is not correct:
+  - verify time type in terminal: `time`
+  - to update the time type: `sudo time MMDDhhmmYYY.ss`
+    for example 01/02/2016 22:33 will be: `sudo 020122332016.00`
 
 ### making
 1. cd to the quadCopter subfolder: cd /home/pi/ardupilot/ArduCopter
