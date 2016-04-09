@@ -1,55 +1,36 @@
 /// -*- tab-width: 4; Mode: C++; c-basic-offset: 4; indent-tabs-mode: nil -*-
 
 #include "Copter.h"
+#include <AP_HAL/RCOutput.h>
 
 //copy of stabilize mode
 //Amit 26/12/15
 bool Copter::test_init(bool ignore_checks)
 {
-    // if landed and the mode we're switching from does not have manual throttle and the throttle stick is too high
-    if (motors.armed() && ap.land_complete && !mode_has_manual_throttle(control_mode) && (g.rc_3.control_in > get_non_takeoff_throttle())) {
-        return false;
-    }
-    // set target altitude to zero for reporting
-    pos_control.set_alt_target(0);
+	if (position_ok() || ignore_checks) {
+			// TODO: init actions
+	        return true;
+	    }else{
+	    	// the motors aren't armed so the engins won't work.
+	    	//though the run function will get into action.
+	        return false;
+	    }
 
-    return true;
 }
 
 void Copter::test_run()
 {
-    float target_roll, target_pitch;
-    float target_yaw_rate;
-    int16_t pilot_throttle_scaled;
+ /* 1. convert user input found in (g.rc_1.control_in,.., g.rc_8.control_in) into
+	 lean angle, rotation rate, climb rate, etc that is appropriate for this flight mode
 
-    // if not armed or throttle at zero, set throttle to zero and exit immediately
-    if(!motors.armed() || ap.throttle_zero) {
-        attitude_control.set_throttle_out_unstabilized(0,true,g.throttle_filt);
-        // slow start if landed
-        if (ap.land_complete) {
-            motors.slow_start(true);
-        }
-        return;
-    }
+	2. pass these desired angles, rates etc into Attitude Control or Position Control
+		on position control mostly z-axis methods will be called because 3D position flight modes make use of the AC_WPNav library.
 
-    // apply SIMPLE mode transform to pilot inputs
-    update_simple_mode();
+		If any methods in AC_PosControl are called then the flight mode code must also call:
+		update_z_controller()
+		and if any xy-axis methods are called then we must call:
+		update_xy_controller()
+	3. call rate_controller_run() (in AC_AttitudeControl)this converts the output from
+	 the methods listed above into roll, pitch and yaw inputs which are sent to the AP_Motors library*/
 
-    // convert pilot input to lean angles
-    // To-Do: convert get_pilot_desired_lean_angles to return angles as floats
-    get_pilot_desired_lean_angles(channel_roll->control_in, channel_pitch->control_in, target_roll, target_pitch, aparm.angle_max);
-
-    // get pilot's desired yaw rate
-    target_yaw_rate = get_pilot_desired_yaw_rate(channel_yaw->control_in);
-
-    // get pilot's desired throttle
-    pilot_throttle_scaled = get_pilot_desired_throttle(channel_throttle->control_in);
-
-    // call attitude controller
-    attitude_control.input_euler_angle_roll_pitch_euler_rate_yaw_smooth(target_roll, target_pitch, target_yaw_rate, get_smoothing_gain());
-
-    // body-frame rate controller is run directly from 100hz loop
-
-    // output pilot's throttle
-    attitude_control.set_throttle_out(pilot_throttle_scaled, true, g.throttle_filt);
 }
