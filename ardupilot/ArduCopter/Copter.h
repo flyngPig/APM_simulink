@@ -800,6 +800,8 @@ private:
     void sport_run();
     bool stabilize_init(bool ignore_checks);
     void stabilize_run();
+    bool diy_init(bool ignore_checks);
+	void diy_run();
     void crash_check();
     void parachute_check();
     void parachute_release();
